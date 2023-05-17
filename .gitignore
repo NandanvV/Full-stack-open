@@ -1,0 +1,15 @@
+*.rdl.data
+*.bim.layout
+FakesAssemblies/
+*.GhostDoc.xml
+.ntvs_analysis.dat
+*.plg
+*.opt
+**/*.HTMLClient/GenerateArtifacts
+**/*.DesktopClient/GenerateArtifacts
+**/*.DesktopClient/ModelManifest.xml
+**/*.Server/GenerateArtifacts
+**/*.Server/ModelManifest.xml
+_Pvt_Extensions
+.paket/paket.exe
+.fake/
