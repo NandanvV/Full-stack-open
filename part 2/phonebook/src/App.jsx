@@ -105,14 +105,22 @@ const App = () => {
         .create(personObject)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
+          setMessage(`Added ${personObject.name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
+        .catch(error => {
+          setError(true)
+          setMessage(error.response.data.error)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+          console.log(error.response.data)
+        }) 
         if (errorValue) {
           setError(false)
         }
-        setMessage(`Added ${personObject.name}`)
-        setTimeout(() => {
-          setMessage(null)
-        }, 5000)
     }
     else {
       const confirmAdd = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
@@ -124,11 +132,17 @@ const App = () => {
           .change(id, personObject)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+            setMessage(`Changed the number of ${person.name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
         .catch(error => {
           setError(true)
-          setMessage(`Information of ${person.name} has already been removed from server`)
-          setPersons(persons.filter(person => person.id !== id))
+          setMessage(error.response.data.error)
+          if (error.response.status === 404) {
+            setPersons(persons.filter(person => person.id !== id))
+          }
           setTimeout(() => {
           setMessage(null)
         }, 5000)
@@ -136,10 +150,6 @@ const App = () => {
         if (errorValue) {
           setError(false)
         }
-        setMessage(`Changed the number of ${person.name}`)
-        setTimeout(() => {
-          setMessage(null)
-        }, 5000)
       }
     }
     setNewName('')
