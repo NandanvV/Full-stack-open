@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
+import PropTypes from 'prop-types'
 
 const Filter = (props) => {
   return (
@@ -12,6 +13,11 @@ const Filter = (props) => {
       </div>
   )
 }
+
+Filter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  handle: PropTypes.func.isRequired,
+};
 
 const PersonForm = (props) => {
   return (
@@ -37,6 +43,15 @@ const PersonForm = (props) => {
   )
 }
 
+PersonForm.propTypes = {
+  addPerson: PropTypes.func.isRequired,
+  newName: PropTypes.string.isRequired,
+  handleName: PropTypes.func.isRequired,
+  newNumber: PropTypes.string.isRequired,
+  handleNumber: PropTypes.func.isRequired,
+};
+
+
 const Persons = ({ personsToShow, deletePerson }) => {
   return(
     <div>
@@ -47,6 +62,12 @@ const Persons = ({ personsToShow, deletePerson }) => {
   )
 }
 
+Persons.propTypes = {
+  personsToShow: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deletePerson: PropTypes.func.isRequired,
+};
+
+
 const Person = ({ person, deletePerson }) => {
   return(
     <div>
@@ -55,6 +76,16 @@ const Person = ({ person, deletePerson }) => {
     </div>
   )
 }
+
+Person.propTypes = {
+  person: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }).isRequired,
+  deletePerson: PropTypes.func.isRequired,
+};
+
 
 const Notification = ({ message, errorValue}) => {
   if (message === null) {
@@ -75,6 +106,11 @@ const Notification = ({ message, errorValue}) => {
     </div>
   )
 }
+
+Notification.propTypes = {
+  message: PropTypes.string,
+  errorValue: PropTypes.bool.isRequired,
+};
 
 
 const App = () => {
